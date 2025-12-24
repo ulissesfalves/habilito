@@ -26,7 +26,7 @@ export const FormSection: React.FC = () => {
     setIsSubmitting(true);
 
     // --- COLOQUE SUA URL AQUI ABAIXO ---
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwq_JlZ365DA4tSO0JdR_cPDT9KjII8bl7s8jVZrSSmtCBxYT663GztCFGudFkhTAql/exec"; 
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZbnrrTApO3AT4mm_jXPrBIAJqGnUErBGroAWzNxBQBwB42PfE63lO-98PO0TwgoD6/exec"; 
     // -----------------------------------
 
     // Prepara os dados exatamente como o Google Sheets espera (nomes das colunas)
@@ -46,7 +46,7 @@ export const FormSection: React.FC = () => {
         method: "POST",
         mode: "no-cors", // Obrigatório para o Google aceitar
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain;charset=utf-8",
         },
         body: JSON.stringify(dadosParaEnviar),
       });
