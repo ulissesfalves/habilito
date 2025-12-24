@@ -1,28 +1,65 @@
 import React, { useState } from 'react';
 import { Button } from './ui/Button';
-import { DriverType, RegistrationData } from '../types';
-import { CheckCircle } from 'lucide-react';
+import { DriverType } from '../types'; // Mantendo seus tipos existentes
+import { CheckCircle, Loader2 } from 'lucide-react';
 
 export const FormSection: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState<RegistrationData>({
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Adicionei email e cnhCategory ao estado
+  const [formData, setFormData] = useState({
     fullName: '',
+    email: '',
     whatsapp: '',
     driverType: '',
-    yearsExperience: ''
+    yearsExperience: '',
+    cnhCategory: ''
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate API call
-    setTimeout(() => {
+    setIsSubmitting(true);
+
+    // --- COLOQUE SUA URL AQUI ABAIXO ---
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwq_JlZ365DA4tSO0JdR_cPDT9KjII8bl7s8jVZrSSmtCBxYT663GztCFGudFkhTAql/exec"; 
+    // -----------------------------------
+
+    // Prepara os dados exatamente como o Google Sheets espera (nomes das colunas)
+    const dadosParaEnviar = {
+      nome: formData.fullName,
+      email: formData.email,
+      telefone: formData.whatsapp,
+      cidade: "Curitiba",        // Fixo, já que o site é focado em Curitiba
+      estado: "PR",              // Fixo
+      anos_cnh: formData.yearsExperience,
+      categoria_cnh: formData.cnhCategory,
+      experiencia_instrutor: formData.driverType
+    };
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", // Obrigatório para o Google aceitar
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dadosParaEnviar),
+      });
+
+      // Sucesso
       setSubmitted(true);
-      console.log('Form submitted:', formData);
-    }, 1000);
+      
+    } catch (error) {
+      console.error("Erro ao enviar", error);
+      alert("Houve um erro ao enviar seu cadastro. Por favor, tente novamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -42,17 +79,23 @@ export const FormSection: React.FC = () => {
                 </div>
                 <h3 className="text-xl font-bold text-slate-900">Cadastro recebido!</h3>
                 <p className="mt-2 text-slate-600">
-                  Nossa equipe entrará em contato pelo WhatsApp em até 24h para os próximos passos.
+                  Seus dados já estão em nossa base. Nossa equipe entrará em contato pelo WhatsApp em breve.
                 </p>
                 <button 
-                  onClick={() => setSubmitted(false)}
+                  onClick={() => {
+                    setSubmitted(false);
+                    setFormData({
+                      fullName: '', email: '', whatsapp: '', driverType: '', yearsExperience: '', cnhCategory: ''
+                    });
+                  }}
                   className="mt-6 text-brand-600 font-medium hover:text-brand-700"
                 >
-                  Voltar ao início
+                  Enviar outro cadastro
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Nome Completo */}
                 <div>
                   <label htmlFor="fullName" className="block text-sm font-medium text-slate-700">Nome Completo</label>
                   <input
@@ -60,6 +103,7 @@ export const FormSection: React.FC = () => {
                     name="fullName"
                     id="fullName"
                     required
+                    disabled={isSubmitting}
                     className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-3 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                     placeholder="Ex: João da Silva"
                     value={formData.fullName}
@@ -67,6 +111,23 @@ export const FormSection: React.FC = () => {
                   />
                 </div>
 
+                {/* Email (NOVO) */}
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-700">E-mail</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                    disabled={isSubmitting}
+                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-3 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                    placeholder="joao@exemplo.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                {/* WhatsApp */}
                 <div>
                   <label htmlFor="whatsapp" className="block text-sm font-medium text-slate-700">WhatsApp</label>
                   <input
@@ -74,6 +135,7 @@ export const FormSection: React.FC = () => {
                     name="whatsapp"
                     id="whatsapp"
                     required
+                    disabled={isSubmitting}
                     className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-3 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                     placeholder="(41) 99999-9999"
                     value={formData.whatsapp}
@@ -81,12 +143,54 @@ export const FormSection: React.FC = () => {
                   />
                 </div>
 
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  {/* Anos de CNH */}
+                  <div>
+                    <label htmlFor="yearsExperience" className="block text-sm font-medium text-slate-700">Anos de CNH</label>
+                    <input
+                      type="number"
+                      name="yearsExperience"
+                      id="yearsExperience"
+                      required
+                      min="1"
+                      disabled={isSubmitting}
+                      className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-3 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                      placeholder="Ex: 8"
+                      value={formData.yearsExperience}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  {/* Categoria CNH (NOVO) */}
+                  <div>
+                    <label htmlFor="cnhCategory" className="block text-sm font-medium text-slate-700">Categoria da CNH</label>
+                    <select
+                      id="cnhCategory"
+                      name="cnhCategory"
+                      required
+                      disabled={isSubmitting}
+                      className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-3 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 bg-white"
+                      value={formData.cnhCategory}
+                      onChange={handleChange}
+                    >
+                      <option value="">Selecione</option>
+                      <option value="B">B (Carro)</option>
+                      <option value="AB">AB (Carro e Moto)</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                      <option value="E">E</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Perfil */}
                 <div>
                   <label htmlFor="driverType" className="block text-sm font-medium text-slate-700">Qual seu perfil?</label>
                   <select
                     id="driverType"
                     name="driverType"
                     required
+                    disabled={isSubmitting}
                     className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-3 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 bg-white"
                     value={formData.driverType}
                     onChange={handleChange}
@@ -98,24 +202,15 @@ export const FormSection: React.FC = () => {
                   </select>
                 </div>
 
-                <div>
-                  <label htmlFor="yearsExperience" className="block text-sm font-medium text-slate-700">Anos de CNH</label>
-                  <input
-                    type="number"
-                    name="yearsExperience"
-                    id="yearsExperience"
-                    required
-                    min="1"
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-3 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
-                    placeholder="Ex: 8"
-                    value={formData.yearsExperience}
-                    onChange={handleChange}
-                  />
-                </div>
-
                 <div className="pt-2">
-                  <Button type="submit" fullWidth className="text-lg">
-                    Quero Ensinar em Curitiba
+                  <Button type="submit" fullWidth className="text-lg" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <span className="flex items-center justify-center">
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Enviando...
+                      </span>
+                    ) : (
+                      "Quero Ensinar em Curitiba"
+                    )}
                   </Button>
                   <p className="mt-4 text-center text-xs text-slate-500">
                     Ao enviar, você concorda com nossa política de privacidade e verificação de dados.
