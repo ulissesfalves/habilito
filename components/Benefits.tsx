@@ -5,23 +5,23 @@ export const Benefits: React.FC = () => {
   const benefits = [
     {
       icon: <Wallet className="h-6 w-6 text-brand-600" />,
-      title: "Ganhos Reais",
-      description: "Receba um valor justo por aula dada. Sem as margens altas das autoescolas tradicionais."
+      title: "Defina seus Valores",
+      description: "Você define o valor da sua hora de mentoria. A plataforma conecta você a condutores que buscam prática."
     },
     {
       icon: <CalendarClock className="h-6 w-6 text-brand-600" />,
       title: "Flexibilidade Total",
-      description: "Você decide quando quer dar aulas. Manhãs, noites ou finais de semana. Você é o chefe."
+      description: "Atenda nos horários que preferir. Ideal para conciliar com outras atividades ou rodar em apps."
     },
     {
       icon: <Users className="h-6 w-6 text-brand-600" />,
-      title: "Alunos Garantidos",
-      description: "Nossa plataforma traz os alunos até você. Foque em ensinar, nós cuidamos do marketing."
+      title: "Público Qualificado",
+      description: "Acesso a uma base de recém-habilitados (CNH B) que buscam aperfeiçoamento e prática assistida."
     },
     {
       icon: <ShieldCheck className="h-6 w-6 text-brand-600" />,
-      title: "Pagamento Seguro",
-      description: "Receba diretamente em sua conta semanalmente. Transparência total nos ganhos."
+      title: "Recebimento Seguro",
+      description: "Sistema organizado para gestão dos seus atendimentos. Transparência financeira total."
     }
   ];
 
@@ -31,7 +31,7 @@ export const Benefits: React.FC = () => {
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-base font-semibold leading-7 text-brand-600">Por que o Habilitô?</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Sua habilidade ao volante vale muito
+            Valorize sua habilidade ao volante
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">

@@ -12,11 +12,11 @@ export const Testimonials: React.FC = () => {
             ))}
           </div>
           <blockquote className="text-xl font-medium text-slate-900 sm:text-2xl leading-relaxed">
-            "Sou motorista de app há 4 anos em Curitiba. Com o Habilitô, consigo preencher os horários de menor movimento dando aulas. A renda é melhor e o desgaste do carro é bem menor."
+            "Sou motorista de app há 4 anos. Com o Habilitô, consigo preencher os horários de menor movimento ajudando recém-habilitados a ganharem confiança. É gratificante e rentável."
           </blockquote>
           <div className="mt-6">
             <div className="font-semibold text-slate-900">Carlos Mendes</div>
-            <div className="text-sm text-slate-600">Parceiro Habilitô no Água Verde</div>
+            <div className="text-sm text-slate-600">Mentor Parceiro no Água Verde</div>
           </div>
         </div>
       </div>

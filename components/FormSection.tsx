@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { Button } from './ui/Button';
-import { DriverType } from '../types'; // Mantendo seus tipos existentes
+import { DriverType, RegistrationData } from '../types';
 import { CheckCircle, Loader2 } from 'lucide-react';
 
 export const FormSection: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // Adicionei email e cnhCategory ao estado
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RegistrationData>({
     fullName: '',
     email: '',
     whatsapp: '',
@@ -25,17 +24,15 @@ export const FormSection: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // --- COLOQUE SUA URL AQUI ABAIXO ---
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZbnrrTApO3AT4mm_jXPrBIAJqGnUErBGroAWzNxBQBwB42PfE63lO-98PO0TwgoD6/exec"; 
-    // -----------------------------------
 
-    // Prepara os dados exatamente como o Google Sheets espera (nomes das colunas)
+    // Mapeamento para as colunas da planilha
     const dadosParaEnviar = {
       nome: formData.fullName,
       email: formData.email,
       telefone: formData.whatsapp,
-      cidade: "Curitiba",        // Fixo, já que o site é focado em Curitiba
-      estado: "PR",              // Fixo
+      cidade: "Curitiba",
+      estado: "PR",
       anos_cnh: formData.yearsExperience,
       categoria_cnh: formData.cnhCategory,
       experiencia_instrutor: formData.driverType
@@ -44,14 +41,13 @@ export const FormSection: React.FC = () => {
     try {
       await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors", // Obrigatório para o Google aceitar
+        mode: "no-cors",
         headers: {
           "Content-Type": "text/plain;charset=utf-8",
         },
         body: JSON.stringify(dadosParaEnviar),
       });
 
-      // Sucesso
       setSubmitted(true);
       
     } catch (error) {
@@ -62,13 +58,25 @@ export const FormSection: React.FC = () => {
     }
   };
 
+  const resetForm = () => {
+    setSubmitted(false);
+    setFormData({
+      fullName: '',
+      email: '',
+      whatsapp: '',
+      driverType: '',
+      yearsExperience: '',
+      cnhCategory: ''
+    });
+  };
+
   return (
     <section id="register-form" className="py-20 bg-white">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
           <div className="bg-brand-600 px-6 py-8 sm:px-10 text-center">
-            <h2 className="text-2xl font-bold text-white">Comece a ensinar em Curitiba</h2>
-            <p className="mt-2 text-brand-100">Junte-se a primeira turma de parceiros Habilitô.</p>
+            <h2 className="text-2xl font-bold text-white">Torne-se um Mentor Habilitô</h2>
+            <p className="mt-2 text-brand-100">Junte-se à primeira turma de parceiros em Curitiba.</p>
           </div>
 
           <div className="px-6 py-8 sm:px-10">
@@ -77,17 +85,12 @@ export const FormSection: React.FC = () => {
                 <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 mb-6">
                   <CheckCircle className="h-8 w-8 text-green-600" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">Cadastro recebido!</h3>
+                <h3 className="text-xl font-bold text-slate-900">Pré-cadastro recebido!</h3>
                 <p className="mt-2 text-slate-600">
-                  Seus dados já estão em nossa base. Nossa equipe entrará em contato pelo WhatsApp em breve.
+                  Seus dados já estão em nossa base segura. Nossa equipe entrará em contato pelo WhatsApp para validação do perfil.
                 </p>
                 <button 
-                  onClick={() => {
-                    setSubmitted(false);
-                    setFormData({
-                      fullName: '', email: '', whatsapp: '', driverType: '', yearsExperience: '', cnhCategory: ''
-                    });
-                  }}
+                  onClick={resetForm}
                   className="mt-6 text-brand-600 font-medium hover:text-brand-700"
                 >
                   Enviar outro cadastro
@@ -111,7 +114,7 @@ export const FormSection: React.FC = () => {
                   />
                 </div>
 
-                {/* Email (NOVO) */}
+                {/* Email */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-slate-700">E-mail</label>
                   <input
@@ -161,7 +164,7 @@ export const FormSection: React.FC = () => {
                     />
                   </div>
 
-                  {/* Categoria CNH (NOVO) */}
+                  {/* Categoria CNH */}
                   <div>
                     <label htmlFor="cnhCategory" className="block text-sm font-medium text-slate-700">Categoria da CNH</label>
                     <select
@@ -209,11 +212,11 @@ export const FormSection: React.FC = () => {
                         <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Enviando...
                       </span>
                     ) : (
-                      "Quero Ensinar em Curitiba"
+                      "Quero ser um Mentor"
                     )}
                   </Button>
                   <p className="mt-4 text-center text-xs text-slate-500">
-                    Ao enviar, você concorda com nossa política de privacidade e verificação de dados.
+                    Ao enviar, você concorda com nossos termos. O cadastro é gratuito por tempo limitado e o modelo de cobrança poderá ser alterado futuramente.
                   </p>
                 </div>
               </form>

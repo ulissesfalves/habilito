@@ -5,17 +5,17 @@ export const HowItWorks: React.FC = () => {
     {
       number: "01",
       title: "Crie seu perfil",
-      description: "Preencha o formulário abaixo em menos de 5 minutos."
+      description: "Preencha seus dados. O cadastro é gratuito para os primeiros parceiros (condição por tempo limitado)."
     },
     {
       number: "02",
-      title: "Verificação rápida",
-      description: "Validamos sua CNH e histórico para segurança de todos."
+      title: "Validação de Segurança",
+      description: "Verificamos sua CNH e antecedentes para garantir a segurança da plataforma."
     },
     {
       number: "03",
-      title: "Comece a lucrar",
-      description: "Receba solicitações de alunos e comece a dar aulas."
+      title: "Comece a Atender",
+      description: "Receba solicitações de condutores já habilitados que buscam prática assistida e combine os detalhes de forma independente, conforme as regras da plataforma."
     }
   ];
 
@@ -24,7 +24,7 @@ export const HowItWorks: React.FC = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900">Como funciona</h2>
-          <p className="mt-4 text-lg text-slate-600">Simples, direto e sem burocracia desnecessária.</p>
+          <p className="mt-4 text-lg text-slate-600">Simples, direto e dentro das normas.</p>
         </div>
         
         <div className="relative">

@@ -10,14 +10,20 @@ export const Footer: React.FC = () => {
              <span className="h-1.5 w-1.5 rounded-full bg-brand-600"></span>
           </div>
           <p className="text-sm text-slate-500 text-center sm:text-right">
-            &copy; {new Date().getFullYear()} Habilitô Curitiba. Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} Habilitô Tecnologia. Todos os direitos reservados.
           </p>
         </div>
         <div className="mt-8 border-t border-slate-200 pt-8">
-          <p className="text-xs text-slate-400 text-center">
-            A plataforma realiza verificação de antecedentes criminais e situação da CNH de todos os parceiros. 
-            Respeitamos as leis de trânsito locais. Este serviço não substitui o processo de habilitação oficial do DETRAN, 
-            servindo como reforço prático para habilitados.
+          <p className="text-xs text-slate-400 text-justify leading-relaxed">
+            <strong>Aviso Legal:</strong> O Habilitô é uma plataforma de tecnologia que conecta prestadores de serviços independentes a condutores já habilitados.
+            <strong> Não somos um Centro de Formação de Condutores (CFC/Autoescola).</strong> As atividades realizadas por meio da plataforma
+            <strong> não configuram aulas de formação ou instrução oficial para obtenção de Carteira Nacional de Habilitação (CNH). </strong>
+            Os serviços destinam-se exclusivamente a pessoas que possuem CNH válida e buscam aperfeiçoamento, prática assistida ou ganho de confiança na condução de veículos.
+            O Habilitô não realiza aulas teóricas ou práticas para obtenção de CNH, nem valida carga horária oficial exigida por órgãos de trânsito.
+            Toda a atividade realizada por meio da plataforma deve respeitar integralmente o Código de Trânsito Brasileiro (CTB).
+            A plataforma poderá, futuramente, adotar modelos de cobrança para manutenção de anúncios, funcionalidades ou serviços.
+            O Habilitô poderá, a seu critério, suspender, modificar ou encerrar a plataforma, total ou parcialmente, a qualquer tempo,
+            especialmente durante a fase beta, observadas as obrigações legais aplicáveis.
           </p>
         </div>
       </div>

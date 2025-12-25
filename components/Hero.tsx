@@ -15,28 +15,28 @@ export const Hero: React.FC<HeroProps> = ({ onCtaClick }) => {
             <div className="inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-sm font-semibold text-brand-700 ring-1 ring-inset ring-brand-600/20 mb-6">
               <span className="flex items-center gap-1">
                 <span className="h-2 w-2 rounded-full bg-brand-600 animate-pulse"></span>
-                Agora em Curitiba
+                Expansão Curitiba
               </span>
             </div>
             <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-              Transforme sua direção em <span className="text-brand-600">renda extra</span>
+              Transforme sua experiência em <span className="text-brand-600">renda extra</span>
             </h1>
             <p className="mt-6 text-lg leading-8 text-slate-600">
-              Conectamos alunos a instrutores e motoristas experientes. Defina seus horários, ensine sem burocracia e receba por aula em Curitiba.
+              Conectamos mentores de trânsito a pessoas <strong>já habilitadas</strong> que precisam perder o medo de dirigir. Ajude novos condutores a ganhar confiança no trânsito urbano.
             </p>
             <div className="mt-8 flex items-center gap-x-6 sm:justify-center lg:justify-start">
               <Button onClick={onCtaClick} className="text-lg px-8 py-4">
-                Começar a Ensinar
+                Quero ser um Mentor
               </Button>
             </div>
             <div className="mt-8 flex items-center gap-4 text-sm text-slate-500 sm:justify-center lg:justify-start">
               <div className="flex items-center gap-1">
                 <CheckCircle2 className="h-4 w-4 text-brand-600" />
-                <span>Sem taxa de adesão</span>
+                <span>Cadastro Gratuito (Fase Beta - condição por tempo limitado)</span>
               </div>
               <div className="flex items-center gap-1">
                 <CheckCircle2 className="h-4 w-4 text-brand-600" />
-                <span>Pagamento seguro</span>
+                <span>Pagamento Seguro</span>
               </div>
             </div>
           </div>
@@ -49,8 +49,8 @@ export const Hero: React.FC<HeroProps> = ({ onCtaClick }) => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
                 <div>
-                  <p className="text-white font-medium">Liberdade para ensinar</p>
-                  <p className="text-slate-200 text-sm">Faça sua própria agenda.</p>
+                  <p className="text-white font-medium">Liberdade Profissional</p>
+                  <p className="text-slate-200 text-sm">Faça sua própria agenda de atendimentos.</p>
                 </div>
               </div>
             </div>
