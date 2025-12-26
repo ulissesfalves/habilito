@@ -23,9 +23,10 @@ export const FormSection: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZbnrrTApO3AT4mm_jXPrBIAJqGnUErBGroAWzNxBQBwB42PfE63lO-98PO0TwgoD6/exec"; 
-
+  
+    const GOOGLE_SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbwZbnrrTApO3AT4mm_jXPrBIAJqGnUErBGroAWzNxBQBwB42PfE63lO-98PO0TwgoD6/exec";
+  
     // Mapeamento para as colunas da planilha
     const dadosParaEnviar = {
       nome: formData.fullName,
@@ -35,9 +36,9 @@ export const FormSection: React.FC = () => {
       estado: "PR",
       anos_cnh: formData.yearsExperience,
       categoria_cnh: formData.cnhCategory,
-      experiencia_instrutor: formData.driverType
+      experiencia_instrutor: formData.driverType,
     };
-
+  
     try {
       await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
@@ -47,9 +48,19 @@ export const FormSection: React.FC = () => {
         },
         body: JSON.stringify(dadosParaEnviar),
       });
-
+  
+      // ✅ MARCA COMO ENVIADO
       setSubmitted(true);
-      
+  
+      // ✅ DISPARA EVENTO LEAD DO META PIXEL
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq("track", "Lead", {
+          content_name: "Cadastro Mentor Habilitô",
+          city: "Curitiba",
+          profile: formData.driverType,
+        });
+      }
+  
     } catch (error) {
       console.error("Erro ao enviar", error);
       alert("Houve um erro ao enviar seu cadastro. Por favor, tente novamente.");
@@ -57,6 +68,7 @@ export const FormSection: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+
 
   const resetForm = () => {
     setSubmitted(false);
